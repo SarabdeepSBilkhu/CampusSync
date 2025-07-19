@@ -67,14 +67,14 @@ const sampleNotes = [
 
 export default function Notes() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [selectedSemester, setSelectedSemester] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("all");
+  const [selectedSemester, setSelectedSemester] = useState("all");
 
   const filteredNotes = sampleNotes.filter(note => {
     return (
       note.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedSubject === "" || note.subject === selectedSubject) &&
-      (selectedSemester === "" || note.semester === selectedSemester)
+      (selectedSubject === "all" || note.subject === selectedSubject) &&
+      (selectedSemester === "all" || note.semester === selectedSemester)
     );
   });
 
@@ -128,7 +128,7 @@ export default function Notes() {
                   <SelectValue placeholder="Subject" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Subjects</SelectItem>
+                  <SelectItem value="all">All Subjects</SelectItem>
                   {subjects.map((subject) => (
                     <SelectItem key={subject} value={subject}>{subject}</SelectItem>
                   ))}
@@ -139,7 +139,7 @@ export default function Notes() {
                   <SelectValue placeholder="Semester" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Semesters</SelectItem>
+                  <SelectItem value="all">All Semesters</SelectItem>
                   {semesters.map((sem) => (
                     <SelectItem key={sem} value={sem}>{sem} Semester</SelectItem>
                   ))}
