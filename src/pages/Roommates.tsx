@@ -87,9 +87,9 @@ const preferences = {
 export default function Roommates() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [filters, setFilters] = useState({
-    location: "",
-    budget: "",
-    sleepSchedule: ""
+    location: "all",
+    budget: "all",
+    sleepSchedule: "all"
   });
 
   const getInitials = (name: string) => {
@@ -98,9 +98,9 @@ export default function Roommates() {
 
   const filteredRoommates = sampleRoommates.filter(roommate => {
     return (
-      (!filters.location || roommate.location === filters.location) &&
-      (!filters.budget || roommate.budget === filters.budget) &&
-      (!filters.sleepSchedule || roommate.sleepSchedule === filters.sleepSchedule)
+      (filters.location === "all" || roommate.location === filters.location) &&
+      (filters.budget === "all" || roommate.budget === filters.budget) &&
+      (filters.sleepSchedule === "all" || roommate.sleepSchedule === filters.sleepSchedule)
     );
   });
 
@@ -170,7 +170,7 @@ export default function Roommates() {
                   <SelectValue placeholder="Location Preference" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Locations</SelectItem>
+                  <SelectItem value="all">All Locations</SelectItem>
                   {preferences.location.map(loc => (
                     <SelectItem key={loc} value={loc}>{loc}</SelectItem>
                   ))}
@@ -181,7 +181,7 @@ export default function Roommates() {
                   <SelectValue placeholder="Budget Range" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Budgets</SelectItem>
+                  <SelectItem value="all">All Budgets</SelectItem>
                   {preferences.budget.map(budget => (
                     <SelectItem key={budget} value={budget}>{budget}</SelectItem>
                   ))}
@@ -192,7 +192,7 @@ export default function Roommates() {
                   <SelectValue placeholder="Sleep Schedule" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Any Schedule</SelectItem>
+                  <SelectItem value="all">Any Schedule</SelectItem>
                   {preferences.sleepSchedule.map(schedule => (
                     <SelectItem key={schedule} value={schedule}>{schedule}</SelectItem>
                   ))}
