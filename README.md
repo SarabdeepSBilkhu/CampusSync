@@ -1,6 +1,3 @@
-Here’s the `README.md` for **Project 1: CampusSync**, with no references to Lovable.dev:
-
-```markdown
 # CampusSync
 
 CampusSync is a streamlined web platform that centralizes essential utilities for college students. It brings together timetables, notes, placement updates, and roommate coordination in one clean, responsive interface to reduce chaos and boost productivity.
@@ -75,8 +72,3 @@ npm run build
 ## 📄 License
 
 MIT
-
-```
-
-Let me know if you want to add a project screenshot or badge section.
-```
