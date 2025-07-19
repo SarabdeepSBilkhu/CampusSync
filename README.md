@@ -1,73 +1,82 @@
-# Welcome to your Lovable project
+Here’s the `README.md` for **Project 1: CampusSync**, with no references to Lovable.dev:
 
-## Project info
+```markdown
+# CampusSync
 
-**URL**: https://lovable.dev/projects/474e2c3b-faf2-4169-8a2f-7c48f353ddcd
+CampusSync is a streamlined web platform that centralizes essential utilities for college students. It brings together timetables, notes, placement updates, and roommate coordination in one clean, responsive interface to reduce chaos and boost productivity.
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+- 📅 Weekly timetable viewer
+- 📓 Notes dashboard
+- 💼 Placement news and notifications
+- 🛏️ Roommate coordination board
+- 🌙 Dark mode support
+- ⚡ Fast, responsive design with animations
 
-**Use Lovable**
+## 🛠️ Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/474e2c3b-faf2-4169-8a2f-7c48f353ddcd) and start prompting.
+- **Frontend:** React (with SWC), TypeScript
+- **Routing:** React Router DOM
+- **Styling:** Tailwind CSS, ShadCN UI, tailwindcss-animate
+- **State Management:** React Query
+- **Build Tool:** Vite
+- **Icons & Animations:** Lucide Icons, Headless UI, Custom Utility Hooks
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📁 Folder Structure
 
-**Use your preferred IDE**
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+src/
+├── components/          # UI components
+├── hooks/               # Custom React hooks
+├── lib/                 # Utility functions, config
+├── pages/               # Page-level components
+└── main.tsx             # Entry point
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+````
 
-Follow these steps:
+## 📦 Getting Started
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 1. Clone and Install Dependencies
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+git clone https://github.com/your-username/CampusSync.git
+cd CampusSync
+npm install
+````
 
-# Step 3: Install the necessary dependencies.
-npm i
+### 2. Start the Dev Server
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### 3. Build for Production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+## ⚙️ Configuration Tips
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+* Ensure `tailwind.config.js` includes:
 
-## What technologies are used for this project?
+  ```js
+  content: [
+    "./src/components/**/*.{ts,tsx}",
+    "./src/hooks/**/*.{ts,tsx}",
+    "./src/lib/**/*.{ts,tsx}",
+    "./src/pages/**/*.{ts,tsx}",
+  ],
+  ```
+* Ensure you're using the correct theme classes like `bg-background`, `text-foreground` defined via `@shadcn/ui`.
 
-This project is built with:
+## 📄 License
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+MIT
 
-## How can I deploy this project?
+```
 
-Simply open [Lovable](https://lovable.dev/projects/474e2c3b-faf2-4169-8a2f-7c48f353ddcd) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Let me know if you want to add a project screenshot or badge section.
+```
