@@ -69,7 +69,7 @@ const Index = () => {
               </div>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white fade-in-up stagger-2">
-              Welcome to <span className="text-blue-200 text-shimmer">CollegeHub</span>
+              Welcome to <span className="text-blue-200 text-shimmer">CampusSync</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto fade-in-up stagger-3">
               Your all-in-one companion for college life. Organize classes, share notes, find opportunities, and connect with roommates.
