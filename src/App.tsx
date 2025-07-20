@@ -18,7 +18,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/CampusSync">
         <Navigation />
         <Routes>
           <Route path="/" element={<Index />} />
