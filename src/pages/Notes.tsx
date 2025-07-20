@@ -79,10 +79,10 @@ export default function Notes() {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background fade-in">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 fade-in-up">
           <h1 className="text-3xl font-bold text-foreground mb-2">Study Notes</h1>
           <p className="text-muted-foreground">Share and access study materials</p>
         </div>
@@ -100,7 +100,21 @@ export default function Notes() {
               <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-medium mb-2">Upload your study notes</h3>
               <p className="text-muted-foreground mb-4">Drag and drop PDF files or click to browse</p>
-              <Button>Choose Files</Button>
+              <Button onClick={() => {
+                // Simulate file upload
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.pdf,.doc,.docx';
+                input.onchange = (e) => {
+                  const file = (e.target as HTMLInputElement).files?.[0];
+                  if (file) {
+                    alert(`File "${file.name}" selected! Upload functionality would be implemented here.`);
+                  }
+                };
+                input.click();
+              }}>
+                Choose Files
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -151,8 +165,8 @@ export default function Notes() {
 
         {/* Notes Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredNotes.map((note) => (
-            <Card key={note.id} className="shadow-soft hover:shadow-medium transition-shadow">
+          {filteredNotes.map((note, index) => (
+            <Card key={note.id} className="shadow-soft hover:shadow-medium transition-shadow card-hover fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
@@ -193,11 +207,23 @@ export default function Notes() {
                     <span className="text-muted-foreground">{note.size}</span>
                   </div>
                   <div className="flex space-x-2 pt-2">
-                    <Button size="sm" className="flex-1">
+                    <Button 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={() => {
+                        alert(`Downloading "${note.title}"... This would trigger a file download in a real app.`);
+                      }}
+                    >
                       <Download className="w-4 h-4 mr-2" />
                       Download
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => {
+                        alert(`Liked "${note.title}"! Like count would be updated in a real app.`);
+                      }}
+                    >
                       <ThumbsUp className="w-4 h-4" />
                     </Button>
                   </div>

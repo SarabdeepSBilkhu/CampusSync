@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Calendar, Clock, MapPin, Plus } from "lucide-react";
 
 const departments = [
@@ -37,6 +39,14 @@ const sampleTimetable = {
 export default function Timetable() {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedSemester, setSelectedSemester] = useState("");
+  const [isAddClassOpen, setIsAddClassOpen] = useState(false);
+  const [newClass, setNewClass] = useState({
+    subject: "",
+    room: "",
+    day: "",
+    time: "",
+    type: ""
+  });
 
   const getSubjectTypeColor = (type: string) => {
     switch (type) {
@@ -49,10 +59,10 @@ export default function Timetable() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background fade-in">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 fade-in-up">
           <h1 className="text-3xl font-bold text-foreground mb-2">Class Timetable</h1>
           <p className="text-muted-foreground">View your weekly class schedule</p>
         </div>
@@ -94,10 +104,72 @@ export default function Timetable() {
                 </Select>
               </div>
               <div className="flex items-end">
-                <Button className="w-full">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Class
-                </Button>
+                <Dialog open={isAddClassOpen} onOpenChange={setIsAddClassOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="w-full">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Class
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Add New Class</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <Input 
+                        placeholder="Subject Name" 
+                        value={newClass.subject}
+                        onChange={(e) => setNewClass({...newClass, subject: e.target.value})}
+                      />
+                      <Input 
+                        placeholder="Room Number" 
+                        value={newClass.room}
+                        onChange={(e) => setNewClass({...newClass, room: e.target.value})}
+                      />
+                      <Select value={newClass.day} onValueChange={(value) => setNewClass({...newClass, day: value})}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Day" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {days.map((day) => (
+                            <SelectItem key={day} value={day}>{day}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Select value={newClass.time} onValueChange={(value) => setNewClass({...newClass, time: value})}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Time Slot" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {timeSlots.map((slot) => (
+                            <SelectItem key={slot} value={slot}>{slot}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Select value={newClass.type} onValueChange={(value) => setNewClass({...newClass, type: value})}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Class Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Lecture">Lecture</SelectItem>
+                          <SelectItem value="Theory">Theory</SelectItem>
+                          <SelectItem value="Lab">Lab</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Button 
+                        className="w-full" 
+                        onClick={() => {
+                          // Here you would typically save the class to your backend
+                          alert(`Class "${newClass.subject}" added successfully!`);
+                          setNewClass({subject: "", room: "", day: "", time: "", type: ""});
+                          setIsAddClassOpen(false);
+                        }}
+                      >
+                        Add Class
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </CardContent>
@@ -105,8 +177,8 @@ export default function Timetable() {
 
         {/* Timetable Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          {days.map((day) => (
-            <Card key={day} className="shadow-soft">
+          {days.map((day, index) => (
+            <Card key={day} className={`shadow-soft card-hover fade-in-up`} style={{animationDelay: `${index * 0.1}s`}}>
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg text-center">{day}</CardTitle>
               </CardHeader>

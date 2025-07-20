@@ -86,6 +86,12 @@ const preferences = {
 
 export default function Roommates() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newProfile, setNewProfile] = useState({
+    name: "",
+    branch: "",
+    semester: "",
+    budget: ""
+  });
   const [filters, setFilters] = useState({
     location: "all",
     budget: "all",
@@ -105,10 +111,10 @@ export default function Roommates() {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background fade-in">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8 fade-in-up">
           <div>
             <h1 className="text-3xl font-bold text-foreground mb-2">Find Roommates</h1>
             <p className="text-muted-foreground">Connect with compatible roommates</p>
@@ -125,9 +131,17 @@ export default function Roommates() {
                 <DialogTitle>Create Roommate Profile</DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
-                <Input placeholder="Full Name" />
-                <Input placeholder="Branch/Department" />
-                <Select>
+                <Input 
+                  placeholder="Full Name" 
+                  value={newProfile.name}
+                  onChange={(e) => setNewProfile({...newProfile, name: e.target.value})}
+                />
+                <Input 
+                  placeholder="Branch/Department" 
+                  value={newProfile.branch}
+                  onChange={(e) => setNewProfile({...newProfile, branch: e.target.value})}
+                />
+                <Select value={newProfile.semester} onValueChange={(value) => setNewProfile({...newProfile, semester: value})}>
                   <SelectTrigger>
                     <SelectValue placeholder="Semester" />
                   </SelectTrigger>
@@ -137,7 +151,7 @@ export default function Roommates() {
                     ))}
                   </SelectContent>
                 </Select>
-                <Select>
+                <Select value={newProfile.budget} onValueChange={(value) => setNewProfile({...newProfile, budget: value})}>
                   <SelectTrigger>
                     <SelectValue placeholder="Budget Range" />
                   </SelectTrigger>
@@ -147,7 +161,18 @@ export default function Roommates() {
                     ))}
                   </SelectContent>
                 </Select>
-                <Button className="w-full" onClick={() => setIsDialogOpen(false)}>
+                <Button 
+                  className="w-full" 
+                  onClick={() => {
+                    if (newProfile.name && newProfile.branch) {
+                      alert(`Profile created for ${newProfile.name}! Your roommate profile is now live.`);
+                      setNewProfile({name: "", branch: "", semester: "", budget: ""});
+                      setIsDialogOpen(false);
+                    } else {
+                      alert("Please fill in at least your name and branch!");
+                    }
+                  }}
+                >
                   Create Profile
                 </Button>
               </div>
@@ -204,8 +229,8 @@ export default function Roommates() {
 
         {/* Roommate Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredRoommates.map((roommate) => (
-            <Card key={roommate.id} className="shadow-soft hover:shadow-medium transition-shadow">
+          {filteredRoommates.map((roommate, index) => (
+            <Card key={roommate.id} className="shadow-soft hover:shadow-medium transition-shadow card-hover fade-in-up" style={{animationDelay: `${index * 0.15}s`}}>
               <CardHeader>
                 <div className="flex items-center space-x-4">
                   <Avatar className="w-16 h-16">
@@ -274,11 +299,23 @@ export default function Roommates() {
                   </div>
 
                   <div className="flex space-x-2 pt-2">
-                    <Button size="sm" className="flex-1">
+                    <Button 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={() => {
+                        alert(`Connection request sent to ${roommate.name}! They will be notified of your interest.`);
+                      }}
+                    >
                       <MessageCircle className="w-4 h-4 mr-2" />
                       Connect
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => {
+                        alert(`Opening detailed profile for ${roommate.name}... This would show a full profile page in a real app.`);
+                      }}
+                    >
                       View Profile
                     </Button>
                   </div>

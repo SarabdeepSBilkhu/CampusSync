@@ -71,6 +71,14 @@ const priorityColors = {
 
 export default function Placements() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newAlert, setNewAlert] = useState({
+    company: "",
+    role: "",
+    package: "",
+    location: "",
+    deadline: "",
+    description: ""
+  });
 
   const getPriorityIcon = (priority: string) => {
     switch (priority) {
@@ -81,10 +89,10 @@ export default function Placements() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background fade-in">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8 fade-in-up">
           <div>
             <h1 className="text-3xl font-bold text-foreground mb-2">Placement Alerts</h1>
             <p className="text-muted-foreground">Stay updated with latest job opportunities</p>
@@ -101,13 +109,49 @@ export default function Placements() {
                 <DialogTitle>Post Placement Alert</DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
-                <Input placeholder="Company Name" />
-                <Input placeholder="Role/Position" />
-                <Input placeholder="Package/Salary" />
-                <Input placeholder="Location" />
-                <Input type="date" placeholder="Application Deadline" />
-                <Textarea placeholder="Job Description..." />
-                <Button className="w-full" onClick={() => setIsDialogOpen(false)}>
+                <Input 
+                  placeholder="Company Name" 
+                  value={newAlert.company}
+                  onChange={(e) => setNewAlert({...newAlert, company: e.target.value})}
+                />
+                <Input 
+                  placeholder="Role/Position" 
+                  value={newAlert.role}
+                  onChange={(e) => setNewAlert({...newAlert, role: e.target.value})}
+                />
+                <Input 
+                  placeholder="Package/Salary" 
+                  value={newAlert.package}
+                  onChange={(e) => setNewAlert({...newAlert, package: e.target.value})}
+                />
+                <Input 
+                  placeholder="Location" 
+                  value={newAlert.location}
+                  onChange={(e) => setNewAlert({...newAlert, location: e.target.value})}
+                />
+                <Input 
+                  type="date" 
+                  placeholder="Application Deadline"
+                  value={newAlert.deadline}
+                  onChange={(e) => setNewAlert({...newAlert, deadline: e.target.value})}
+                />
+                <Textarea 
+                  placeholder="Job Description..." 
+                  value={newAlert.description}
+                  onChange={(e) => setNewAlert({...newAlert, description: e.target.value})}
+                />
+                <Button 
+                  className="w-full" 
+                  onClick={() => {
+                    if (newAlert.company && newAlert.role) {
+                      alert(`Placement alert for ${newAlert.role} at ${newAlert.company} posted successfully!`);
+                      setNewAlert({company: "", role: "", package: "", location: "", deadline: "", description: ""});
+                      setIsDialogOpen(false);
+                    } else {
+                      alert("Please fill in at least the company name and role!");
+                    }
+                  }}
+                >
                   Post Alert
                 </Button>
               </div>
@@ -117,46 +161,46 @@ export default function Placements() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="shadow-soft">
+          <Card className="shadow-soft card-hover fade-in-up stagger-1">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Briefcase className="w-8 h-8 text-primary" />
+                <Briefcase className="w-8 h-8 text-primary hover-scale" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-muted-foreground">Active Alerts</p>
-                  <p className="text-2xl font-bold text-foreground">12</p>
+                  <p className="text-2xl font-bold text-foreground count-up">12</p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-soft">
+          <Card className="shadow-soft card-hover fade-in-up stagger-2">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Building className="w-8 h-8 text-accent" />
+                <Building className="w-8 h-8 text-accent hover-scale" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-muted-foreground">Companies</p>
-                  <p className="text-2xl font-bold text-foreground">8</p>
+                  <p className="text-2xl font-bold text-foreground count-up">8</p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-soft">
+          <Card className="shadow-soft card-hover fade-in-up stagger-3">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Users className="w-8 h-8 text-secondary" />
+                <Users className="w-8 h-8 text-secondary hover-scale" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-muted-foreground">Applications</p>
-                  <p className="text-2xl font-bold text-foreground">448</p>
+                  <p className="text-2xl font-bold text-foreground count-up">448</p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-soft">
+          <Card className="shadow-soft card-hover fade-in-up stagger-4">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <TrendingUp className="w-8 h-8 text-primary" />
+                <TrendingUp className="w-8 h-8 text-primary hover-scale" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-muted-foreground">Success Rate</p>
-                  <p className="text-2xl font-bold text-foreground">78%</p>
+                  <p className="text-2xl font-bold text-foreground count-up">78%</p>
                 </div>
               </div>
             </CardContent>
@@ -165,8 +209,8 @@ export default function Placements() {
 
         {/* Placement Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {samplePlacements.map((placement) => (
-            <Card key={placement.id} className="shadow-soft hover:shadow-medium transition-shadow">
+          {samplePlacements.map((placement, index) => (
+            <Card key={placement.id} className="shadow-soft hover:shadow-medium transition-shadow card-hover fade-in-up" style={{animationDelay: `${index * 0.2}s`}}>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
@@ -214,8 +258,22 @@ export default function Placements() {
                   </div>
 
                   <div className="flex space-x-2 pt-2">
-                    <Button className="flex-1">Apply Now</Button>
-                    <Button variant="outline">Save</Button>
+                    <Button 
+                      className="flex-1"
+                      onClick={() => {
+                        alert(`Application submitted for ${placement.role} at ${placement.company}! You would be redirected to the company's application portal in a real app.`);
+                      }}
+                    >
+                      Apply Now
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
+                        alert(`Saved ${placement.role} at ${placement.company} to your favorites!`);
+                      }}
+                    >
+                      Save
+                    </Button>
                   </div>
                 </div>
               </CardContent>
